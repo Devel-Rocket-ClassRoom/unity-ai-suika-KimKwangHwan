@@ -175,20 +175,23 @@ public class GameManager : MonoBehaviour
     void CheckGameOver()
     {
         if (victory) return;
-        Fruit[] all = FindObjectsByType<Fruit>(FindObjectsSortMode.None);
-        foreach (Fruit f in all)
+
+        var list = Fruit.ActiveFruits;
+        float now = Time.time;
+
+        for (int i = 0; i < list.Count; i++)
         {
+            Fruit f = list[i];
             if (f == current || !f.dropped) continue;
-            if (Time.time - f.dropTime < 2f) continue;
-            if (f.transform.position.y > gameOverY)
+            if (now - f.dropTime < 2f) continue;
+            if (f.transform.position.y <= gameOverY) continue;
+
+            Rigidbody2D rb = f.GetComponent<Rigidbody2D>();
+            if (rb.linearVelocity.sqrMagnitude < 0.01f)
             {
-                Rigidbody2D rb = f.GetComponent<Rigidbody2D>();
-                if (rb.linearVelocity.magnitude < 0.1f)
-                {
-                    gameOver = true;
-                    Debug.Log("Game Over! Score: " + score);
-                    return;
-                }
+                gameOver = true;
+                Debug.Log("Game Over! Score: " + score);
+                return;
             }
         }
     }

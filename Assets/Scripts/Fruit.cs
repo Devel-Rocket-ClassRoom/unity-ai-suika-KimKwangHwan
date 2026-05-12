@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -9,7 +10,7 @@ public class Fruit : MonoBehaviour
     public bool dropped;
     public bool merged;
     public float dropTime;
-
+    public static readonly List<Fruit> ActiveFruits = new List<Fruit>();
     SpriteRenderer sr;
     Rigidbody2D rb;
     CircleCollider2D col;
@@ -65,5 +66,15 @@ public class Fruit : MonoBehaviour
         otherFruit.merged = true;
         Vector2 mid = (transform.position + other.transform.position) * 0.5f;
         GameManager.Instance.Merge(this, otherFruit, mid);
+    }
+
+    void OnEnable()
+    {
+        ActiveFruits.Add(this);
+    }
+
+    void OnDisable()
+    {
+        ActiveFruits.Remove(this);
     }
 }
