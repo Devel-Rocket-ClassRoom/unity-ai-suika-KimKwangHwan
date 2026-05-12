@@ -21,14 +21,20 @@ public class Fruit : MonoBehaviour
         col = GetComponent<CircleCollider2D>();
     }
 
-    public void Configure(int stage, Sprite sprite)
+    public void Configure(int stage)
     {
         this.stage = stage;
-        sr.sprite = sprite;
-        sr.color = GameManager.StageColor(stage);
+        sr.sprite = GameManager.StageSprite(stage);
+        sr.color = Color.white;
         float diameter = GameManager.StageDiameter(stage);
-        transform.localScale = Vector3.one * diameter;
-        if (col != null) col.radius = 0.5f;
+        float r = GameManager.StageColliderRadius(stage);
+        float scale = r > 0.001f ? diameter / (2f * r) : diameter;
+        transform.localScale = Vector3.one * scale;
+        if (col != null)
+        {
+            col.radius = r;
+            col.offset = GameManager.StageColliderOffset(stage);
+        }
     }
 
     public void Drop()

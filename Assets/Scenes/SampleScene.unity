@@ -286,7 +286,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27dcc195d65c4f64f888c873bbb9b4c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  circleSprite: {fileID: -2413806693520163455, guid: 4cf7bf1a91f5e8640a892e751d597219, type: 3}
+  stageSprites:
+  - {fileID: 21300000, guid: 00739a84722e837469bb83bd4eebe54c, type: 3}
+  - {fileID: 21300000, guid: e5e08c7ececdd544c840581f5512b541, type: 3}
+  - {fileID: 21300000, guid: 6e526939a28f4dc4eaac10306e714b6d, type: 3}
+  - {fileID: 21300000, guid: aaebc7af7e403c340a5bfc9dd1953b0e, type: 3}
+  - {fileID: 21300000, guid: de0d6f3308a1dc340ae0dc1a2e770e2d, type: 3}
+  - {fileID: 21300000, guid: b2b91da67f2d75e48935b671efefd91a, type: 3}
+  - {fileID: 21300000, guid: 11f92744eec79554bbb43545de96f841, type: 3}
+  - {fileID: 21300000, guid: 986ba586c1ff6e74188ca72d1b07cd9d, type: 3}
+  - {fileID: 21300000, guid: 78810f3930a29344083e0760485670b8, type: 3}
+  - {fileID: 21300000, guid: 993eb73b79dc837439c2194a0d5d32ee, type: 3}
+  - {fileID: 21300000, guid: 66ffbbfe523fb4e4291984d89af979c1, type: 3}
   fruitPrefab: {fileID: 3434164396791891552, guid: 6ad5a2d5d08bea14cbc2a9ad79b1c00d, type: 3}
   spawnPoint: {fileID: 0}
   spawnY: 4
@@ -295,6 +306,30 @@ MonoBehaviour:
   gameOverY: 3.5
   maxSpawnStage: 4
   spawnCooldown: 0.5
+  stageColliderRadius:
+  - 0.22399667
+  - 0.26
+  - 0.26
+  - 0.23
+  - 0.29
+  - 0.3
+  - 0.26
+  - 0.28
+  - 0.26
+  - 0.32
+  - 0.32
+  stageColliderOffset:
+  - {x: -0.01, y: -0.1288018}
+  - {x: 0, y: -0.06}
+  - {x: 0, y: -0.03}
+  - {x: 0, y: -0.12}
+  - {x: 0, y: -0.06}
+  - {x: 0, y: -0.06}
+  - {x: 0, y: -0.09}
+  - {x: 0, y: -0.06}
+  - {x: 0, y: -0.12}
+  - {x: 0, y: -0.09}
+  - {x: 0, y: -0.09}
   score: 0
 --- !u!4 &514423145
 Transform:

@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public Sprite circleSprite;
+    public Sprite[] stageSprites = new Sprite[11];
     public Fruit fruitPrefab;
     public Transform spawnPoint;
     public float spawnY = 4f;
@@ -16,33 +16,37 @@ public class GameManager : MonoBehaviour
     public int maxSpawnStage = 4;
     public float spawnCooldown = 0.5f;
 
-    static readonly Color[] stageColors = new Color[]
-    {
-        new Color(1.00f, 0.40f, 0.45f),
-        new Color(1.00f, 0.65f, 0.30f),
-        new Color(1.00f, 0.90f, 0.30f),
-        new Color(0.65f, 0.95f, 0.40f),
-        new Color(0.30f, 0.85f, 0.55f),
-        new Color(0.30f, 0.75f, 1.00f),
-        new Color(0.55f, 0.50f, 1.00f),
-        new Color(0.85f, 0.45f, 1.00f),
-        new Color(1.00f, 0.45f, 0.85f),
-        new Color(0.95f, 0.30f, 0.30f),
-        new Color(0.30f, 0.80f, 0.30f),
-    };
-
     static readonly float[] stageDiameters = new float[]
     {
-        0.5f, 0.7f, 0.9f, 1.1f, 1.35f, 1.6f, 1.9f, 2.2f, 2.55f, 2.9f, 3.3f
+        0.325f, 0.455f, 0.585f, 0.715f, 0.8775f, 1.04f, 1.235f, 1.43f, 1.6575f, 1.885f, 2.145f
     };
+
+    public float[] stageColliderRadius = new float[]
+    {
+        0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f
+    };
+
+    public Vector2[] stageColliderOffset = new Vector2[11];
 
     Fruit current;
     float lastDropTime = -999f;
     bool gameOver;
     public int score;
 
-    public static Color StageColor(int stage) => stageColors[Mathf.Clamp(stage, 0, stageColors.Length - 1)];
+    public static Sprite StageSprite(int stage) => Instance.stageSprites[Mathf.Clamp(stage, 0, Instance.stageSprites.Length - 1)];
     public static float StageDiameter(int stage) => stageDiameters[Mathf.Clamp(stage, 0, stageDiameters.Length - 1)];
+    public static float StageColliderRadius(int stage)
+    {
+        var arr = Instance.stageColliderRadius;
+        if (arr == null || arr.Length == 0) return 0.5f;
+        return arr[Mathf.Clamp(stage, 0, arr.Length - 1)];
+    }
+    public static Vector2 StageColliderOffset(int stage)
+    {
+        var arr = Instance.stageColliderOffset;
+        if (arr == null || arr.Length == 0) return Vector2.zero;
+        return arr[Mathf.Clamp(stage, 0, arr.Length - 1)];
+    }
     public static int MaxStage => stageDiameters.Length - 1;
 
     void Awake()
@@ -87,7 +91,7 @@ public class GameManager : MonoBehaviour
     {
         int stage = Random.Range(0, maxSpawnStage);
         Fruit f = Instantiate(fruitPrefab);
-        f.Configure(stage, circleSprite);
+        f.Configure(stage);
         f.SetKinematic();
         f.transform.position = new Vector3(0, spawnY, 0);
         current = f;
@@ -103,7 +107,7 @@ public class GameManager : MonoBehaviour
         if (newStage > MaxStage) return;
 
         Fruit f = Instantiate(fruitPrefab);
-        f.Configure(newStage, circleSprite);
+        f.Configure(newStage);
         f.transform.position = pos;
         f.Drop();
     }
